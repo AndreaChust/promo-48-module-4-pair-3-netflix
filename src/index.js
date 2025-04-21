@@ -1,10 +1,27 @@
 const express = require('express');
 const cors = require('cors');
+const mysql = require('mysql2/promise');
 
 // create and config server
 const server = express();
 server.use(cors());
 server.use(express.json());
+
+async function getConnection() {
+  const connection = await mysql.createConnection({
+    host: 'localhost',
+    database: 'pruebas',
+    user: 'root',
+    password: 'cucocuco',
+  });
+  await connection.connect();
+
+  console.log(
+    `Conexión establecida con la base de datos (identificador=${connection.threadId})`
+  );
+
+  return connection;
+}
 
 // init express aplication
 const serverPort = 4000;
@@ -12,8 +29,8 @@ server.listen(serverPort, () => {
   console.log(`Server listening at http://localhost:${serverPort}`);
 });
 
-const fakeMovies = [
-  {
+/*const fakeMovies = [
+   {
     id: 1,
     title: "Wonder Woman",
     genre: "Action",
@@ -32,15 +49,21 @@ const fakeMovies = [
     category: "Thriller",
     year: 2010,
     director: "Christopher Nolan",
-  },
-];
+  }, 
+]; */
 // ENDPOINT
 
 // LISTAR PELÍCULAS
 
-server.get("/api/movies", (req, res) => {
+server.get("/api/movies", async (req, res) => {
 
-    if (fakeMovies.length === 0) {
+  const connection = await getConnection();
+  const query = "SELECT * FROM movies;";
+  const moviesResults = await connection.query(query);
+console.log(moviesResults);
+connection.end();
+
+    if (moviesResults.length === 0) {
       res.status(404).json({
         status: "error",
         message: "No se han encontrado resultados"
@@ -48,13 +71,11 @@ server.get("/api/movies", (req, res) => {
     } else {
       res.status(200).json({
         success: true,
-        movies: fakeMovies
+        movies: moviesResults
       });
 
     }
 
- 
-    
 
 })
 
