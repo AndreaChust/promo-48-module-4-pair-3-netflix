@@ -6,6 +6,7 @@ const MoviesList = ({ movies }) => {
   };
 
   const renderMovies = () => {
+    console.log(movies);
     return movies.map((movie) => {
       return (
         <li key={movie.id} className="card">

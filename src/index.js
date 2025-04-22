@@ -59,7 +59,7 @@ server.get("/api/movies", async (req, res) => {
 
   const connection = await getConnection();
   const query = "SELECT * FROM movies;";
-  const moviesResults = await connection.query(query);
+  const [moviesResults] = await connection.query(query);
 console.log(moviesResults);
 connection.end();
 
