@@ -12,7 +12,7 @@ async function getConnection() {
     host: 'localhost',
     database: 'pruebas',
     user: 'root',
-    password: 'cucocuco',
+    password: 'SantoySeña31',
   });
   await connection.connect();
 

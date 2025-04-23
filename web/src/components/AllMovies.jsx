@@ -24,7 +24,7 @@ const AllMovies = ({
         <div className="movies__filters--genre">
           <label htmlFor="filterGenre">Filtrar por género</label>
           <select
-            className="form__input-text"
+            className="form__input-text js-form__input-text"
             id="filterGenre"
             name="genre"
             value={allMoviesOptionGenre}
