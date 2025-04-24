@@ -12,7 +12,7 @@ async function getConnection() {
     host: 'localhost',
     database: 'pruebas',
     user: 'root',
-    password: 'SantoySeña31',
+    password: 'cucocuco',
   });
   await connection.connect();
 
@@ -55,12 +55,14 @@ server.listen(serverPort, () => {
 
 // LISTAR PELÍCULAS
 
-server.get("/api/movies", async (req, res) => {
+ server.get("/api/movies", async (req, res) => {
 
   const connection = await getConnection();
-  const query = "SELECT * FROM movies;";
+  let query = "SELECT * FROM movies;";
+  const filterGenre = req.query.genre;
+  
   const [moviesResults] = await connection.query(query);
-console.log(moviesResults);
+  console.log(req.query.genre);
 connection.end();
 
     if (moviesResults.length === 0) {
@@ -77,5 +79,5 @@ connection.end();
     }
 
 
-})
+}) 
 
