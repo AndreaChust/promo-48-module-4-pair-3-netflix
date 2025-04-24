@@ -1,11 +1,13 @@
 const express = require('express');
 const cors = require('cors');
 const mysql = require('mysql2/promise');
+require('dotenv').config();
+// const bcrypt = require
 
 // create and config server
 const server = express();
 server.use(cors());
-server.use(express.json());
+server.use(express.json({ limit: "25mb" }));
 
 async function getConnection() {
   const connection = await mysql.createConnection({
@@ -59,7 +61,7 @@ server.listen(serverPort, () => {
 server.get("/api/movies", async (req, res) => {
 
   const connection = await getConnection();
-  const query = "SELECT * FROM movies;";
+
   const [moviesResults] = await connection.query(query);
 console.log(moviesResults);
 connection.end();
@@ -79,4 +81,6 @@ connection.end();
 
 
 })
+
+
 
