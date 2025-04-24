@@ -12,9 +12,8 @@ async function getConnection() {
   const connection = await mysql.createConnection({
     host: 'localhost',
     database: 'pruebas',
-    user: "root",
-    password: "SantoySeña31",
-    port: 4000
+    user: 'root',
+    password: 'cucocuco',
   });
   await connection.connect();
 
@@ -57,7 +56,7 @@ server.listen(serverPort, () => {
 
 // LISTAR PELÍCULAS
 
- server.get("/api/movies", async (req, res) => {
+/*  server.get("/api/movies", async (req, res) => {
 
   const connection = await getConnection();
   let query = "SELECT * FROM movies;";
@@ -80,8 +79,42 @@ connection.end();
 
     }
 
+})  */
 
-}) 
-
-
+    server.get("/api/movies", async (req, res) => {
+      const connection = await getConnection();
+      const genreFilterParam = req.query.genre;
+    
+      let query = "SELECT * FROM movies";
+      const queryParams = [];
+    
+      if (genreFilterParam && genreFilterParam !== "") {
+        query += " WHERE genre = ?";
+        queryParams.push(genreFilterParam);
+      }
+    
+      try {
+        const [moviesResults] = await connection.query(query, queryParams);
+        connection.end();
+    
+        if (moviesResults.length === 0) {
+          res.status(404).json({
+            status: "error",
+            message: "No se han encontrado resultados"
+          });
+        } else {
+          res.status(200).json({
+            success: true,
+            movies: moviesResults
+          });
+        }
+      } catch (error) {
+        connection.end();
+        res.status(500).json({
+          status: "error",
+          message: "Error al obtener las películas"
+        });
+      }
+    });
+    
 
