@@ -1,18 +1,25 @@
 const express = require('express');
 const cors = require('cors');
 const mysql = require('mysql2/promise');
+// const bcrypt = require
 
 // create and config server
 const server = express();
 server.use(cors());
-server.use(express.json());
+server.use(express.json({ limit: "25mb" }));
 
 async function getConnection() {
   const connection = await mysql.createConnection({
     host: 'localhost',
     database: 'pruebas',
+<<<<<<< HEAD
     user: 'root',
     password: 'cucocuco',
+=======
+    user: "root",
+    password: "SantoySeña31",
+    port: 4000
+>>>>>>> d17dce016e84cc605f8a22a716400fef5d53f36f
   });
   await connection.connect();
 
@@ -80,4 +87,6 @@ connection.end();
 
 
 }) 
+
+
 
