@@ -1,7 +1,6 @@
 const express = require('express');
 const cors = require('cors');
 const mysql = require('mysql2/promise');
-require('dotenv').config();
 // const bcrypt = require
 
 // create and config server
@@ -13,9 +12,9 @@ async function getConnection() {
   const connection = await mysql.createConnection({
     host: 'localhost',
     database: 'pruebas',
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    port: process.env.PORT
+    user: "root",
+    password: "SantoySeña31",
+    port: 4000
   });
   await connection.connect();
 
