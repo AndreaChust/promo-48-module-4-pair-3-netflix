@@ -12,14 +12,9 @@ async function getConnection() {
   const connection = await mysql.createConnection({
     host: 'localhost',
     database: 'pruebas',
-<<<<<<< HEAD
-    user: 'root',
-    password: 'cucocuco',
-=======
     user: "root",
     password: "SantoySeña31",
     port: 4000
->>>>>>> d17dce016e84cc605f8a22a716400fef5d53f36f
   });
   await connection.connect();
 
